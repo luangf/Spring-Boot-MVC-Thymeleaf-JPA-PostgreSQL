@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <title>Spring Boot</title>
     
+    <!-- Adicionando JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+            crossorigin="anonymous"></script>
+    
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
-    <!--Import materialize.min.css-->
-    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <style type="text/css">
 		table.striped>tbody>tr:nth-child(odd) {
@@ -50,7 +54,7 @@
 				</div>
 			</div>
 			
-			<div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+			<div class="row"> <!-- sec:authorize="hasAnyRole('ROLE_ADMIN')" -->
 				<div class="input-field col s6">
 					<label for="sobrenome" class="active">Sobrenome:</label>
 					<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validate">
@@ -58,6 +62,39 @@
 				<div class="input-field col s6">
 					<label for="idade" class="active">Idade:</label>
 					<input name="idade" th:field="*{idade}" id="idade" class="validate">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="cep" class="active">Cep:</label>
+					<input name="cep" th:field="*{cep}" id="cep" class="validate">
+				</div>
+				<div class="input-field col s6">
+					<label for="rua" class="active">Rua:</label>
+					<input name="rua" th:field="*{rua}" id="rua" class="validate">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="bairro" class="active">Bairro:</label>
+					<input name="bairro" th:field="*{bairro}" id="bairro" class="validate">
+				</div>
+				<div class="input-field col s6">
+					<label for="cidade" class="active">Cidade:</label>
+					<input name="cidade" th:field="*{cidade}" id="cidade" class="validate">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="uf" class="active">Estado:</label>
+					<input name="uf" th:field="*{uf}" id="uf" class="validate">
+				</div>
+				<div class="input-field col s6">
+					<label for="ibge" class="active">IBGE:</label>
+					<input name="ibge" th:field="*{ibge}" id="ibge" class="validate">
 				</div>
 			</div>
 			
@@ -108,8 +145,76 @@
 		</tr>
 	</table>
 	
-	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
-	<!--JavaScript at end of body for optimized loading-->
-	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <!-- Adicionando Javascript -->
+    <script>
+
+        $(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#rua").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+                $("#uf").val("");
+                $("#ibge").val("");
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#cep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#rua").val("...");
+                        $("#bairro").val("...");
+                        $("#cidade").val("...");
+                        $("#uf").val("...");
+                        $("#ibge").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#rua").val(dados.logradouro);
+                                $("#bairro").val(dados.bairro);
+                                $("#cidade").val(dados.localidade);
+                                $("#uf").val(dados.uf);
+                                $("#ibge").val(dados.ibge);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
