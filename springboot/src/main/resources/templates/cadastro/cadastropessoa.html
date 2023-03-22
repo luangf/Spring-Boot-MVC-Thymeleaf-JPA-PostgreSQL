@@ -31,108 +31,121 @@
 <body>
 	<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
 	<br/>
-	<h5>Cadastro de Pessoas</h5>
-	<br/>
 	
-	<div class="row">
-		
-		<br>
-		<div th:each="m: ${msg}">
-			<span th:text="${m}"/>
+	<fieldset>
+		<legend>Cadastro de Pessoas</legend>
+		<div class="row">
+			<br>
+			<div th:each="m: ${msg}">
+				<span th:text="${m}"/>
+			</div>
+			<br>
+			
+			<form id="formPessoa" action="salvarpessoa" method="post" th:object="${pessoaObj}" class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="id" class="active">ID:</label>
+						<input name="id" th:field="*{id}" readonly="readonly" id="id">
+					</div> 
+					<div class="input-field col s6">
+						<label for="nome" class="active">Nome:</label>
+						<input placeholder="Informe o nome da pessoa" name="nome" th:field="*{nome}" id="nome" class="validate">
+					</div>
+				</div>
+				
+				<div class="row"> <!-- sec:authorize="hasAnyRole('ROLE_ADMIN')" -->
+					<div class="input-field col s6">
+						<label for="sobrenome" class="active">Sobrenome:</label>
+						<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validate">
+					</div>
+					<div class="input-field col s6">
+						<label for="idade" class="active">Idade:</label>
+						<input name="idade" th:field="*{idade}" id="idade" class="validate">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="sexoPessoa" class="active">Sexo:</label>
+						<select class="browser-default" th:field="*{sexoPessoa}">
+							<option value="" disabled selected>--[Selecione]--</option>
+							<option value="MASCULINO" th:text="Masculino"/>
+							<option value="FEMININO" th:text="Feminino"/>
+						</select>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="cep" class="active">Cep:</label>
+						<input placeholder="Informe um CEP válido" name="cep" th:field="*{cep}" id="cep" class="validate">
+					</div>
+					<div class="input-field col s6">
+						<label for="rua" class="active">Rua:</label>
+						<input name="rua" th:field="*{rua}" id="rua" class="validate">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="bairro" class="active">Bairro:</label>
+						<input name="bairro" th:field="*{bairro}" id="bairro" class="validate">dsa
+					</div>
+					<div class="input-field col s6">
+						<label for="cidade" class="active">Cidade:</label>
+						<input name="cidade" th:field="*{cidade}" id="cidade" class="validate">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="uf" class="active">Estado:</label>
+						<input name="uf" th:field="*{uf}" id="uf" class="validate">
+					</div>
+					<div class="input-field col s6">
+						<label for="ibge" class="active">IBGE:</label>
+						<input name="ibge" th:field="*{ibge}" id="ibge" class="validate">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<input class="waves-effect waves-light btn" type="submit" value="Salvar">
+						<button class="waves-effect waves-light btn" onclick="document.getElementById('formPessoa').reset();">Novo</button>
+					</div>
+				</div>		
+			</form>
 		</div>
-		<br>
-		
-		<form id="formPessoa" action="salvarpessoa" method="post" th:object="${pessoaObj}" class="col s12">
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="id" class="active">ID:</label>
-					<input name="id" th:field="*{id}" readonly="readonly" id="id">
-				</div> 
-				<div class="input-field col s6">
-					<label for="nome" class="active">Nome:</label>
-					<input placeholder="Informe o nome da pessoa" name="nome" th:field="*{nome}" id="nome" class="validate">
-				</div>
-			</div>
-			
-			<div class="row"> <!-- sec:authorize="hasAnyRole('ROLE_ADMIN')" -->
-				<div class="input-field col s6">
-					<label for="sobrenome" class="active">Sobrenome:</label>
-					<input name="sobrenome" th:field="*{sobrenome}" id="sobrenome" class="validate">
-				</div>
-				<div class="input-field col s6">
-					<label for="idade" class="active">Idade:</label>
-					<input name="idade" th:field="*{idade}" id="idade" class="validate">
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="sexoPessoa" class="active">Sexo:</label>
-					<select class="browser-default" th:field="*{sexoPessoa}">
-						<option value="" disabled selected>--[Selecione]--</option>
-						<option value="MASCULINO" th:text="Masculino"/>
-						<option value="FEMININO" th:text="Feminino"/>
-					</select>
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="cep" class="active">Cep:</label>
-					<input placeholder="Informe um CEP válido" name="cep" th:field="*{cep}" id="cep" class="validate">
-				</div>
-				<div class="input-field col s6">
-					<label for="rua" class="active">Rua:</label>
-					<input name="rua" th:field="*{rua}" id="rua" class="validate">
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="bairro" class="active">Bairro:</label>
-					<input name="bairro" th:field="*{bairro}" id="bairro" class="validate">dsa
-				</div>
-				<div class="input-field col s6">
-					<label for="cidade" class="active">Cidade:</label>
-					<input name="cidade" th:field="*{cidade}" id="cidade" class="validate">
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="input-field col s6">
-					<label for="uf" class="active">Estado:</label>
-					<input name="uf" th:field="*{uf}" id="uf" class="validate">
-				</div>
-				<div class="input-field col s6">
-					<label for="ibge" class="active">IBGE:</label>
-					<input name="ibge" th:field="*{ibge}" id="ibge" class="validate">
-				</div>
-			</div>
-			
-			<div class="row">
-				<div class="input-field col s6">
-					<input class="waves-effect waves-light btn" type="submit" value="Salvar">
-					<button class="waves-effect waves-light btn" onclick="document.getElementById('formPessoa').reset();">Novo</button>
-				</div>
-			</div>		
-		</form>
-	</div>
+	</fieldset>
 	
 	<br/>
-	<div class="row">
-		<form action="pesquisarpessoa" method="post" class="col s12">
-			<div class="row">
-				<div class="input-field col s12">
-					<label for="nomePesquisa" class="active">Pesquisa por Nome:</label>
-					<input name="nomePesquisa" id="nomePesquisa" class="validate">
+	<fieldset>
+		<legend>Campos de Pesquisa</legend>
+		<div class="row">
+			<form action="pesquisarpessoa" method="post" class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="nomePesquisa" class="active">Pesquisa por Nome:</label>
+						<input name="nomePesquisa" id="nomePesquisa" class="validate">
+					</div>
+					<div class="input-field col s6">
+						<label for="pesquisaSexo" class="active">Pesquisa por Sexo:</label>
+						<select class="browser-default" name="pesquisaSexo" id="pesquisaSexo">
+							<option value="" disabled selected>--[Selecione]--</option>
+							<option value="MASCULINO" th:text="Masculino"/>
+							<option value="FEMININO" th:text="Feminino"/>
+						</select>
+					</div>
 				</div>
-				<div class="input-field col s6">
-					<input class="waves-effect waves-light btn" type="submit" value="Buscar">
-					<a class="waves-effect waves-light btn" href="/listapessoas">Lista de Todas as Pessoas</a>
+				<div class="row">
+					<div class="input-field col s6">
+						<input class="waves-effect waves-light btn" type="submit" value="Buscar">
+						<a class="waves-effect waves-light btn" href="/listapessoas">Lista de Todas as Pessoas</a>
+					</div>
 				</div>
-			</div>
-		</form>
-	</div>
+			</form>
+		</div>
+	</fieldset>
 	<br/>
 	
 	<table class="striped">
