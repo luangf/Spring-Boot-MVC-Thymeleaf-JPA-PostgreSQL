@@ -43,14 +43,14 @@ public class Pessoa implements Serializable {
 	private String uf;
 	private String ibge;
 
-	private String sexoPessoa;
+	private String sexopessoa;
 	
-	public void setSexoPessoa(String sexoPessoa) {
-		this.sexoPessoa = sexoPessoa;
+	public void setSexopessoa(String sexopessoa) {
+		this.sexopessoa = sexopessoa;
 	}
 	
-	public String getSexoPessoa() {
-		return sexoPessoa;
+	public String getSexopessoa() {
+		return sexopessoa;
 	}
 	
 	public String getCep() {

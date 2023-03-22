@@ -66,9 +66,9 @@
 				
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="sexoPessoa" class="active">Sexo:</label>
-						<select class="browser-default" th:field="*{sexoPessoa}">
-							<option value="" disabled selected>--[Selecione]--</option>
+						<label for="sexopessoa" class="active">Sexo:</label>
+						<select class="browser-default" th:field="*{sexopessoa}">
+							<option value="" disabled selected >--[Selecione]--</option>
 							<option value="MASCULINO" th:text="Masculino"/>
 							<option value="FEMININO" th:text="Feminino"/>
 						</select>
@@ -131,7 +131,7 @@
 					<div class="input-field col s6">
 						<label for="pesquisaSexo" class="active">Pesquisa por Sexo:</label>
 						<select class="browser-default" name="pesquisaSexo" id="pesquisaSexo">
-							<option value="" disabled selected>--[Selecione]--</option>
+							<option value="">--[Todos]--</option>
 							<option value="MASCULINO" th:text="Masculino"/>
 							<option value="FEMININO" th:text="Feminino"/>
 						</select>
