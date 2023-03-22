@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot</title>
+    
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.css"  media="screen,projection"/>
+    <!--Import materialize.min.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+
+    <style type="text/css">
+		table.striped>tbody>tr:nth-child(odd) {
+    		background-color: rgba(158, 154, 154, 0.5);
+		}
+		form input[type=submit]{
+			color:white;
+		}
+	</style>
+    
+    <!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
+	<br/>
+	<h5>Cadastro de Pessoas</h5>
+	<br/>
+	
+	<a class="waves-effect waves-light btn" href="/cadastropessoa">< Voltar para o Cadastro de Pessoas</a>
+	
+	<div th:each="p: ${pessoaObj}">
+		<div class="row">
+			<p>ID: <span th:text="${p.id}"/></p>
+			<p>Nome: <span th:text="${p.nome}"/></p>
+			<p>Sobrenome: <span th:text="${p.sobrenome}"/></p>
+			<p>Idade: <span th:text="${p.idade}"/></p>
+		</div>
+	</div>
+	
+	<h5>Telefones</h5>
+	<div class="row">
+		<form id="formTelefone" th:action="@{/addfonepessoa/{idpessoa}(idpessoa=${pessoaObj.id})}" method="post" class="col s12">
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="numero" class="active">Número:</label>
+					<input id="numero" name="numero" class="validate">
+				</div>
+				<div class="input-field col s6">
+					<label for="tipo" class="active">Tipo:</label>
+					<input id="tipo" name="tipo" class="validate">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input class="waves-effect waves-light btn" type="submit" value="Adicionar">
+					<button class="waves-effect waves-light btn" onclick="document.getElementById('formTelefone').reset();">Novo</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<table class="striped">
+		<thead>
+			<tr>
+				<th>Número</th>
+				<th>Tipo</th>
+				<th>Excluir</th>
+			</tr>	
+		</thead>
+		<tr th:each="fone: ${telefones}">
+			<td th:text="${fone.numero}"/>
+			<td th:text="${fone.tipo}"/>
+			<td><a th:href="@{/removertelefone/{idtelefone}(idtelefone=${fone.id})}">Excluir</a></td>
+		</tr>
+	</table>
+	
+	<script type="text/javascript" src="/materialize/js/materialize.js"></script>
+	<!--JavaScript at end of body for optimized loading-->
+	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>
+</body>
+</html>
