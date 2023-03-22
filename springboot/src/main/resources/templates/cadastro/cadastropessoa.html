@@ -67,6 +67,17 @@
 			
 			<div class="row">
 				<div class="input-field col s6">
+					<label for="sexoPessoa" class="active">Sexo:</label>
+					<select class="browser-default" th:field="*{sexoPessoa}">
+						<option value="" disabled selected>--[Selecione]--</option>
+						<option value="MASCULINO" th:text="Masculino"/>
+						<option value="FEMININO" th:text="Feminino"/>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
 					<label for="cep" class="active">Cep:</label>
 					<input placeholder="Informe um CEP válido" name="cep" th:field="*{cep}" id="cep" class="validate">
 				</div>

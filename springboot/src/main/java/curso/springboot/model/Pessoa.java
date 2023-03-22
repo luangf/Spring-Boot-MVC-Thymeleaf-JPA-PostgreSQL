@@ -43,6 +43,16 @@ public class Pessoa implements Serializable {
 	private String uf;
 	private String ibge;
 
+	private String sexoPessoa;
+	
+	public void setSexoPessoa(String sexoPessoa) {
+		this.sexoPessoa = sexoPessoa;
+	}
+	
+	public String getSexoPessoa() {
+		return sexoPessoa;
+	}
+	
 	public String getCep() {
 		return cep;
 	}
