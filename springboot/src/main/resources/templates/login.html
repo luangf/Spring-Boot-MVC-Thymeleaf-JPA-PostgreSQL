@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <style type="text/css">
+		form input[type=submit]{
+			color:white;
+		}
+	</style>
+    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+	<h1>Acesso ao Sistema</h1>
+
+	<form th:action="@{/login}" method="post" class="col s12">
+		<div class="row">
+			<div class="input-field col s6">
+				<label>Login</label>
+				<input type="text" name="username">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<label>Senha</label>
+				<input type="password" name="password">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<input type="submit" value="Logar" class="waves-effect waves-light btn">
+			</div>
+		</div>
+	</form>
+	
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
