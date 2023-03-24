@@ -136,8 +136,46 @@ public class PessoaController {
 	@GetMapping("**/pesquisarpessoa") //post q vem do form do html, requestparam q vem do post, n na url
 	public void imprimePDF(@RequestParam("nomePesquisa") String nomePesquisa, //n retorna nada pra tela, n recarrega, void..
 						   @RequestParam("pesquisaSexo") String pesquisaSexo,
-						   HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("s");
+						   HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		List<Pessoa> pessoas=new ArrayList<Pessoa>();
+		if(pesquisaSexo != null && !pesquisaSexo.isEmpty() &&
+				nomePesquisa != null && !nomePesquisa.isEmpty()) { //busca por nome e sexo
+			
+			pessoas=pessoaRepository.findPessoaByNameSexo(nomePesquisa, pesquisaSexo);
+			
+		}else if(nomePesquisa != null && !nomePesquisa.isEmpty()){ //busca so por nome
+			
+			pessoas=pessoaRepository.findPessoaByName(nomePesquisa);
+			
+		}else if(pesquisaSexo != null && !pesquisaSexo.isEmpty()) { //busca so por sexo
+			
+			pessoas=pessoaRepository.findPessoaBySexo(pesquisaSexo);
+			
+		}else { //busca todos
+			Iterable<Pessoa> itPessoas= pessoaRepository.findAll();
+			for (Pessoa pessoa : itPessoas) {
+				pessoas.add(pessoa);
+			}
+		}
+
+		//Serviço q faz a geração do relatório
+		byte[] pdf=reportUtil.gerarRelatorio(pessoas, "pessoa", request.getServletContext());
+		
+		//Tamanho da resposta
+		response.setContentLength(pdf.length);
+		
+		//Definir na resposta o tipo de arquivo
+		response.setContentType("application/octet-stream");
+		
+		//Definir o cabeçalho da resposta
+		String headerKey="Content-Disposition";
+		String headerValue=String.format("attachment; filename=\"%s\"", "relatorio.pdf");
+		response.setHeader(headerKey, headerValue);
+		
+		//Finaliza a resposta para o navegador
+		response.getOutputStream().write(pdf);
+		
 	}
 	
 	@GetMapping("/telefones/{idpessoa}")
