@@ -122,7 +122,7 @@
 	<fieldset>
 		<legend>Campos de Pesquisa</legend>
 		<div class="row">
-			<form action="pesquisarpessoa" method="post" class="col s12">
+			<form id="pesquisarpessoa" action="pesquisarpessoa" method="post" class="col s12">
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="nomePesquisa" class="active">Pesquisa por Nome:</label>
@@ -141,6 +141,7 @@
 					<div class="input-field col s6">
 						<input class="waves-effect waves-light btn" type="submit" value="Buscar">
 						<a class="waves-effect waves-light btn" href="/listapessoas">Lista de Todas as Pessoas</a>
+						<input class="waves-effect waves-light btn" type="submit" value="PDF"  onclick="document.getElementById('pesquisarpessoa').method='get'">
 					</div>
 				</div>
 			</form>
