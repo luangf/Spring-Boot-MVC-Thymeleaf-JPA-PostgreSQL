@@ -192,7 +192,7 @@
 				<th>Excluir</th>
 			</tr>
 		</thead>
-		<tr th:each="pessoa: ${pessoas}">
+		<tr th:each="pessoa: ${pessoas.content}">
 			<td th:text="${pessoa.id}"/>
 			<td><a th:href="@{/telefones/{idpessoa}(idpessoa=${pessoa.id})}"><span th:text="${pessoa.nome}"/></a></td>
 			<td th:text="${pessoa.sobrenome}"/>

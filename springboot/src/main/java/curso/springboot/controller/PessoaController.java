@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -57,6 +60,17 @@ public class PessoaController {
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
 		return modelAndView;
+	}
+	
+	@GetMapping("/pessoaspag")
+	public ModelAndView carregaPessoasPorPaginacao(@PageableDefault(size = 5) Pageable pageable, ModelAndView model) {
+		
+		Page<Pessoa> pagePessoa=pessoaRepository.findAll(pageable);
+		model.addObject("pessoas", pagePessoa);
+		model.addObject("pessoaObj", new Pessoa());
+		model.setViewName("cadastro/cadastropessoa");
+		
+		return model;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="**/salvarpessoa", consumes = {"multipart/form-data"})
