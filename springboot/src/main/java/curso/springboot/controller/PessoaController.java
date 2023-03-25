@@ -63,11 +63,13 @@ public class PessoaController {
 	}
 	
 	@GetMapping("/pessoaspag")
-	public ModelAndView carregaPessoasPorPaginacao(@PageableDefault(size = 5) Pageable pageable, ModelAndView model) {
+	public ModelAndView carregaPessoasPorPaginacao(@PageableDefault(size = 5) Pageable pageable, ModelAndView model,
+			@RequestParam("nomepesquisa") String nomepesquisa) {
 		
-		Page<Pessoa> pagePessoa=pessoaRepository.findAll(pageable);
+		Page<Pessoa> pagePessoa=pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
 		model.addObject("pessoas", pagePessoa);
 		model.addObject("pessoaObj", new Pessoa());
+		model.addObject("nomepesquisa", nomepesquisa);
 		model.setViewName("cadastro/cadastropessoa");
 		
 		return model;
@@ -154,15 +156,16 @@ public class PessoaController {
 	}
 	
 	@PostMapping("**/pesquisarpessoa") //post q vem do form do html, requestparam q vem do post, n na url
-	public ModelAndView pesquisar(@RequestParam("nomePesquisa") String nomePesquisa,
-								  @RequestParam("pesquisaSexo") String pesquisaSexo) {
+	public ModelAndView pesquisar(@RequestParam("nomepesquisa") String nomepesquisa,
+								  @RequestParam("pesquisaSexo") String pesquisaSexo,
+								  @PageableDefault(size = 5, sort= {"nome"}) Pageable pageable) {
 		
-		List<Pessoa> pessoas=new ArrayList<Pessoa>();
+		Page<Pessoa> pessoas=null;
 		
 		if(pesquisaSexo != null && !pesquisaSexo.isEmpty()) {
-			pessoas=pessoaRepository.findPessoaByNameSexo(nomePesquisa, pesquisaSexo);
+			pessoas=pessoaRepository.findPessoaByNameSexoPage(nomepesquisa, pesquisaSexo, pageable);
 		}else {
-			pessoas=pessoaRepository.findPessoaByName(nomePesquisa);
+			pessoas=pessoaRepository.findPessoaByNamePage(nomepesquisa, pageable);
 		}
 		
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
@@ -170,24 +173,25 @@ public class PessoaController {
 		modelAndView.addObject("pessoas", pessoas);
 		modelAndView.addObject("pessoaObj", new Pessoa());
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
+		modelAndView.addObject("nomepesquisa", nomepesquisa);
 		
 		return modelAndView;
 	}
 	
 	@GetMapping("**/pesquisarpessoa") //post q vem do form do html, requestparam q vem do post, n na url
-	public void imprimePDF(@RequestParam("nomePesquisa") String nomePesquisa, //n retorna nada pra tela, n recarrega, void..
+	public void imprimePDF(@RequestParam("nomepesquisa") String nomepesquisa, //n retorna nada pra tela, n recarrega, void..
 						   @RequestParam("pesquisaSexo") String pesquisaSexo,
 						   HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		List<Pessoa> pessoas=new ArrayList<Pessoa>();
 		if(pesquisaSexo != null && !pesquisaSexo.isEmpty() &&
-				nomePesquisa != null && !nomePesquisa.isEmpty()) { //busca por nome e sexo
+				nomepesquisa != null && !nomepesquisa.isEmpty()) { //busca por nome e sexo
 			
-			pessoas=pessoaRepository.findPessoaByNameSexo(nomePesquisa, pesquisaSexo);
+			pessoas=pessoaRepository.findPessoaByNameSexo(nomepesquisa, pesquisaSexo);
 			
-		}else if(nomePesquisa != null && !nomePesquisa.isEmpty()){ //busca so por nome
+		}else if(nomepesquisa != null && !nomepesquisa.isEmpty()){ //busca so por nome
 			
-			pessoas=pessoaRepository.findPessoaByName(nomePesquisa);
+			pessoas=pessoaRepository.findPessoaByName(nomepesquisa);
 			
 		}else if(pesquisaSexo != null && !pesquisaSexo.isEmpty()) { //busca so por sexo
 			

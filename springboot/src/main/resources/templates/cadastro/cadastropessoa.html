@@ -168,8 +168,9 @@
 			<form id="pesquisarpessoa" action="pesquisarpessoa" method="post" class="col s12">
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="nomePesquisa" class="active">Pesquisa por Nome:</label>
-						<input name="nomePesquisa" id="nomePesquisa" class="validate">
+						<label for="nomepesquisa" class="active">Pesquisa por Nome:</label>
+						<input name="nomepesquisa" id="nomepesquisa" class="validate"
+							th:value="${nomepesquisa}">
 					</div>
 					<div class="input-field col s6">
 						<label for="pesquisaSexo" class="active">Pesquisa por Sexo:</label>
@@ -183,7 +184,7 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<input class="waves-effect waves-light btn" type="submit" value="Buscar">
-						<a class="waves-effect waves-light btn" href="/listapessoas">Lista de Todas as Pessoas</a>
+						<a class="waves-effect waves-light btn" href="/listapessoas">Lista Pessoas</a>
 						<input class="waves-effect waves-light btn" type="submit" value="PDF"  onclick="document.getElementById('pesquisarpessoa').method='get'">
 					</div>
 				</div>
@@ -219,15 +220,15 @@
 	<div class="row" style="margin-top: 30px;">
 		<center>
 			<span th:if="${pessoas.hasPrevious()}">
-		    	<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+		    	<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Anterior</a>
 		    </span>
 			
 	 		<th:block th:each="i:${#numbers.sequence(0, pessoas.totalPages-1)}">
-				<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i}+1 ]]</a>
+				<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">[[ ${i}+1 ]]</a>
 			</th:block>
 			
 			<span th:if="${pessoas.hasNext()}">
-         		<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+         		<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size}, nomepesquisa=${nomepesquisa})}">Próximo</a>
      		</span>
 		</center>
 	</div>
