@@ -63,26 +63,45 @@ public class Pessoa implements Serializable {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
-	
+
 	@Lob
 	private byte[] curriculo;
-	
+
+	private String nomeFileCurriculo;
+	private String tipoFileCurriculo;
+
+	public String getNomeFileCurriculo() {
+		return nomeFileCurriculo;
+	}
+
+	public void setNomeFileCurriculo(String nomeFileCurriculo) {
+		this.nomeFileCurriculo = nomeFileCurriculo;
+	}
+
+	public String getTipoFileCurriculo() {
+		return tipoFileCurriculo;
+	}
+
+	public void setTipoFileCurriculo(String tipoFileCurriculo) {
+		this.tipoFileCurriculo = tipoFileCurriculo;
+	}
+
 	public void setCurriculo(byte[] curriculo) {
 		this.curriculo = curriculo;
 	}
-	
+
 	public byte[] getCurriculo() {
 		return curriculo;
 	}
-	
+
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
+
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
-	
+
 	public void setCargo(Cargo cargo) {
 		this.cargo = cargo;
 	}

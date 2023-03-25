@@ -80,10 +80,15 @@ public class PessoaController {
 		
 		if(file.getSize() > 0) { //cadastrando novo curriculo
 			pessoa.setCurriculo(file.getBytes());
+			pessoa.setTipoFileCurriculo(file.getContentType());
+			pessoa.setNomeFileCurriculo(file.getOriginalFilename());
 		}else {
 			if(pessoa.getId() != null && pessoa.getId() > 0) { //editando
-				byte[] curriculoPessoaTemp=pessoaRepository.findById(pessoa.getId()).get().getCurriculo(); //pega curriculo
-				pessoa.setCurriculo(curriculoPessoaTemp);
+				Pessoa pessoaTemp=pessoaRepository.findById(pessoa.getId()).get();
+				
+				pessoa.setCurriculo(pessoaTemp.getCurriculo());
+				pessoa.setTipoFileCurriculo(pessoaTemp.getTipoFileCurriculo());
+				pessoa.setNomeFileCurriculo(pessoaTemp.getNomeFileCurriculo());
 			}
 		}
 		
