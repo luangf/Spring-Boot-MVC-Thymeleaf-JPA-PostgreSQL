@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -48,8 +50,7 @@ public class PessoaController {
 	public ModelAndView inicio() {
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
 		
-		Iterable<Pessoa> pessoasIt=pessoaRepository.findAll();
-		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		
 		modelAndView.addObject("pessoaObj", new Pessoa());
 		
@@ -64,8 +65,7 @@ public class PessoaController {
 		
 		if(bindingResult.hasErrors()) {
 			ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
-			Iterable<Pessoa> pessoasIt=pessoaRepository.findAll();
-			modelAndView.addObject("pessoas", pessoasIt);
+			modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 			modelAndView.addObject("pessoaObj", pessoa);
 			
 			List<String> msg=new ArrayList<String>();
@@ -95,10 +95,9 @@ public class PessoaController {
 		pessoaRepository.save(pessoa);
 		
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
-		Iterable<Pessoa> pessoasIt=pessoaRepository.findAll();
 		
 		//o thymeleaf carrega todas as pessoas na tabela através desse atributo
-		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		//limpa o form depois de salvar, o thymeleaf pega o atributo
 		modelAndView.addObject("pessoaObj", new Pessoa());
 		
@@ -107,10 +106,8 @@ public class PessoaController {
 	
 	@RequestMapping(method = RequestMethod.GET, value="/listapessoas")
 	public ModelAndView pessoas() {
-		Iterable<Pessoa> pessoasIt=pessoaRepository.findAll();
-		
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
-		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("pessoaObj", new Pessoa());
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
@@ -124,8 +121,7 @@ public class PessoaController {
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
 		modelAndView.addObject("pessoaObj", pessoa.get());
 		
-		Iterable<Pessoa> pessoasIt=pessoaRepository.findAll();
-		modelAndView.addObject("pessoas", pessoasIt);
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
 		return modelAndView;
@@ -136,7 +132,7 @@ public class PessoaController {
 		pessoaRepository.deleteById(idpessoa);
 		
 		ModelAndView modelAndView=new ModelAndView("cadastro/cadastropessoa");
-		modelAndView.addObject("pessoas", pessoaRepository.findAll());
+		modelAndView.addObject("pessoas", pessoaRepository.findAll(PageRequest.of(0, 5, Sort.by("nome"))));
 		modelAndView.addObject("pessoaObj", new Pessoa());
 		modelAndView.addObject("profissoes", profissaoRepository.findAll());
 		
