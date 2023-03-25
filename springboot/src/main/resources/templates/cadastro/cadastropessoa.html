@@ -23,6 +23,17 @@
 		form input[type=submit]{
 			color:white;
 		}
+		table {
+		 width: 100%;
+		}
+
+		table td, table th {
+		 border: 1px solid grey;
+		}
+
+		table th {
+		 background: #eee;
+		}
 	</style>
     
     <!--Let browser know website is optimized for mobile-->
@@ -205,6 +216,22 @@
 		</tr>
 	</table>
 	
+	<div class="row" style="margin-top: 30px;">
+		<center>
+			<span th:if="${pessoas.hasPrevious()}">
+		    	<a th:href="@{/pessoaspag(page=${pessoas.number-1}, size=${pessoas.size})}">Anterior</a>
+		    </span>
+			
+	 		<th:block th:each="i:${#numbers.sequence(0, pessoas.totalPages-1)}">
+				<a th:href="@{/pessoaspag(page=${i}, size=${pessoas.size})}">[[ ${i}+1 ]]</a>
+			</th:block>
+			
+			<span th:if="${pessoas.hasNext()}">
+         		<a th:href="@{/pessoaspag(page=${pessoas.number+1}, size=${pessoas.size})}">Próximo</a>
+     		</span>
+		</center>
+	</div>
+
 	<!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     
