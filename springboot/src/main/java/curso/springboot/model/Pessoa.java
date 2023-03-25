@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -45,26 +47,37 @@ public class Pessoa implements Serializable {
 	private String ibge;
 
 	private String sexopessoa;
-	
-	@ManyToOne //pode ter muitas pessoas(Pessoa) para uma profissao(Profissao)
+
+	@ManyToOne // pode ter muitas pessoas(Pessoa) para uma profissao(Profissao)
 	private Profissao profissao;
-	
+
+	@Enumerated(EnumType.STRING)
+	private Cargo cargo;
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
 	public void setProfissao(Profissao profissao) {
 		this.profissao = profissao;
 	}
-	
+
 	public Profissao getProfissao() {
 		return profissao;
 	}
-	
+
 	public void setSexopessoa(String sexopessoa) {
 		this.sexopessoa = sexopessoa;
 	}
-	
+
 	public String getSexopessoa() {
 		return sexopessoa;
 	}
-	
+
 	public String getCep() {
 		return cep;
 	}

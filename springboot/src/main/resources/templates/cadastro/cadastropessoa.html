@@ -83,6 +83,15 @@
 				</div>
 				
 				<div class="row">
+					<div class="input-field col s12">
+						<label for="cargo" class="active">Cargo:</label>
+						<select class="browser-default" th:field="*{cargo}" id="cargo">
+							<option th:each="c:${T(curso.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
+						</select>
+					</div>
+				</div>
+				
+				<div class="row">
 					<div class="input-field col s6">
 						<label for="cep" class="active">Cep:</label>
 						<input placeholder="Informe um CEP válido" name="cep" th:field="*{cep}" id="cep" class="validate">
