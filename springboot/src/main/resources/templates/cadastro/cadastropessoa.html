@@ -73,6 +73,13 @@
 							<option value="FEMININO" th:text="Feminino"/>
 						</select>
 					</div>
+				
+					<div class="input-field col s6">
+						<label for="profissao" class="active">Profissao:</label>
+						<select class="browser-default" th:field="*{profissao}" id="profissao">
+							<option th:each="p:${profissoes}" th:value="${p.id}" th:text="${p.nome}">
+						</select>
+					</div>
 				</div>
 				
 				<div class="row">
