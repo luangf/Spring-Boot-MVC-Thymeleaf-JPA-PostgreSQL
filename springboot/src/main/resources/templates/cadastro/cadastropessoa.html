@@ -27,6 +27,9 @@
     
     <!--Let browser know website is optimized for mobile-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	
+	<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+	<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 	<h3>Spring Boot + Thymeleaf + Material Design Lite</h3>
@@ -83,11 +86,17 @@
 				</div>
 				
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<label for="cargo" class="active">Cargo:</label>
 						<select class="browser-default" th:field="*{cargo}" id="cargo">
 							<option th:each="c:${T(curso.springboot.model.Cargo).values()}" th:value="${c.valor}" th:text="${c.nome}">
 						</select>
+					</div>
+					
+					<div class="input-field col s6">
+						<label for="dataNascimento" class="active">Data Nascimento:</label>
+						<input type="date" id="dataNascimento" name="dataNascimento" th:field="*{dataNascimento}"
+						placeholder="Data Nasc.">
 					</div>
 				</div>
 				
@@ -193,6 +202,11 @@
     <script>
 
         $(document).ready(function() {
+
+			$('#dataNascimento').datepicker({
+				showOthermonths:true,
+				format:'yyyy-mm-dd'
+			});
 
             function limpa_formulário_cep() {
                 // Limpa valores do formulário de cep.
