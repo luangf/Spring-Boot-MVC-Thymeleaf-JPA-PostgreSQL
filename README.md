@@ -6,11 +6,11 @@ Sistema web CRUD completo feito em Spring Boot MVC + Thymeleaf + JPA - usando ba
 - Thymeleaf + Materialize CSS -> Front End
 - JPA + HIBERNATE -> Banco de Dados: PostgreSQL 14
 - Maven
-- Spring Tool Suite 4 IDE
+- Spring Tool Suite IDE
 
 --- Tecnologias usadas também no projeto: ---
 - Web Service RESTful CEP
-- Jasper (Jaspersoft Studio) 6.20.0 para relatórios
+- Jasper (Jaspersoft Studio) para relatórios
 
 --- Algumas das Funcionalidades Gerais do Sistema: ---
 - Cadastro de Pessoas
